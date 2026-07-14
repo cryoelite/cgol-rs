@@ -1,0 +1,10 @@
+[package]
+name = "cgol-rs"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tracing = "0.1.44"
+tracing-subscriber = "0.3.23"
+anyhow = "1.0.103"
+eframe = { version = "0.35.0", features = ["persistence"] }
