@@ -233,12 +233,3 @@ fn get_neighbor_count(x: usize, y: usize, grid: &Grid) -> usize {
     .filter(|elem| **elem)
     .count()
 }
-
-//First we need a grid
-//Next we need to be able to reach any x,y cell in that grid
-//Next we need to define the state of each cell and be able to manipulate it, toggling it either off or on based on it being filled
-//For the cell rules we need to have a global state of the grid
-//Next for each cell x,y we then decide whether it is painted or not based on cgol rules
-//and so we do for each cell in the grid
-
-//The global painter paints the whole grid and checks whether each cell is either filled or unfilled

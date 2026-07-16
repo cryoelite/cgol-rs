@@ -15,10 +15,10 @@ fn main() -> Result<()> {
     let _enter = span.enter();
     info!("Starting cgol-rs library");
     match cgol_rs::main() {
-        Ok(_)=> {
+        Ok(_) => {
             info!("Finished cgol-rs library");
         }
-        Err(err)=> {
+        Err(err) => {
             error!("Error running cgol-rs library: {}", err);
         }
     }
