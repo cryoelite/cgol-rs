@@ -10,7 +10,96 @@ const APP_NAME: &str = "cgol-rs";
 const CELL_SIZE: f32 = 6.0;
 const ROWS: usize = 100;
 const COLUMNS: usize = 100;
-const SEED: [(usize, usize); 5] = [(60, 61), (60, 62), (61, 60), (61, 61), (62, 61)]; //Trying R-pentomino
+
+// ---------------------------------------------------------------------------
+// Seeds
+//
+// A seed is just a list of (row, column) pairs that start out alive, on the
+// ROWS x COLUMNS grid. Exactly one `SEED` must be uncommented at a time.
+//
+// Coordinates below are picked so the pattern sits somewhere sensible on the
+// default 100x100 grid; if you shrink ROWS/COLUMNS, move them accordingly.
+// Remember the grid wraps around (toroidal), so nothing ever falls off an edge,
+// it just comes back around the other side.
+// ---------------------------------------------------------------------------
+
+/// R-pentomino: the classic methuselah. 5 cells that stay chaotic for over a
+/// thousand generations before settling down into debris and gliders.
+const SEED: [(usize, usize); 5] = [(60, 61), (60, 62), (61, 60), (61, 61), (62, 61)];
+
+// /// Block: a still life. Never changes. Good for sanity-checking the rules.
+// const SEED: [(usize, usize); 4] = [(50, 50), (50, 51), (51, 50), (51, 51)];
+
+// /// Blinker: the smallest oscillator, period 2.
+// const SEED: [(usize, usize); 3] = [(50, 49), (50, 50), (50, 51)];
+
+// /// Toad: period 2 oscillator.
+// const SEED: [(usize, usize); 6] = [
+//     (50, 50), (50, 51), (50, 52),
+//     (51, 49), (51, 50), (51, 51),
+// ];
+
+// /// Beacon: period 2 oscillator, two blocks blinking at each other.
+// const SEED: [(usize, usize); 8] = [
+//     (49, 49), (49, 50), (50, 49), (50, 50),
+//     (51, 51), (51, 52), (52, 51), (52, 52),
+// ];
+
+// /// Pulsar: period 3 oscillator, and the prettiest one that fits comfortably.
+// const SEED: [(usize, usize); 48] = [
+//     (44, 46), (44, 47), (44, 48), (44, 52), (44, 53), (44, 54),
+//     (46, 44), (46, 49), (46, 51), (46, 56),
+//     (47, 44), (47, 49), (47, 51), (47, 56),
+//     (48, 44), (48, 49), (48, 51), (48, 56),
+//     (49, 46), (49, 47), (49, 48), (49, 52), (49, 53), (49, 54),
+//     (51, 46), (51, 47), (51, 48), (51, 52), (51, 53), (51, 54),
+//     (52, 44), (52, 49), (52, 51), (52, 56),
+//     (53, 44), (53, 49), (53, 51), (53, 56),
+//     (54, 44), (54, 49), (54, 51), (54, 56),
+//     (56, 46), (56, 47), (56, 48), (56, 52), (56, 53), (56, 54),
+// ];
+
+// /// Glider: the smallest spaceship. Moves one cell diagonally every 4
+// /// generations, so on this wrapped grid it loops forever (period 400).
+// const SEED: [(usize, usize); 5] = [(10, 11), (11, 12), (12, 10), (12, 11), (12, 12)];
+
+// /// Lightweight spaceship: travels 2 cells sideways every 4 generations.
+// const SEED: [(usize, usize); 9] = [
+//     (50, 8), (50, 11),
+//     (51, 12),
+//     (52, 8), (52, 12),
+//     (53, 9), (53, 10), (53, 11), (53, 12),
+// ];
+
+// /// Diehard: 7 cells that thrash around and then vanish completely at
+// /// generation 130. The generation counter keeps going on an empty grid.
+// const SEED: [(usize, usize); 7] = [
+//     (49, 52),
+//     (50, 46), (50, 47),
+//     (51, 47), (51, 51), (51, 52), (51, 53),
+// ];
+
+// /// Acorn: 7 cells that take thousands of generations to settle.
+// const SEED: [(usize, usize); 7] = [
+//     (48, 47),
+//     (49, 49),
+//     (50, 46), (50, 47), (50, 50), (50, 51), (50, 52),
+// ];
+
+// /// Gosper glider gun: the first known pattern with unbounded growth, firing a
+// /// glider every 30 generations. Note that on a wrapped 100x100 grid the
+// /// gliders eventually come back around and crash into the gun itself.
+// const SEED: [(usize, usize); 36] = [
+//     (10, 34),
+//     (11, 32), (11, 34),
+//     (12, 22), (12, 23), (12, 30), (12, 31), (12, 44), (12, 45),
+//     (13, 21), (13, 25), (13, 30), (13, 31), (13, 44), (13, 45),
+//     (14, 10), (14, 11), (14, 20), (14, 26), (14, 30), (14, 31),
+//     (15, 10), (15, 11), (15, 20), (15, 24), (15, 26), (15, 27), (15, 32), (15, 34),
+//     (16, 20), (16, 26), (16, 34),
+//     (17, 21), (17, 25),
+//     (18, 22), (18, 23),
+// ];
 
 #[instrument]
 pub fn main() -> Result<()> {
